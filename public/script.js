@@ -1,9 +1,9 @@
 const socket = io("/");
 const videoGrid = document.getElementById("video-grid");
 const myPeer = new Peer(undefined, {
-  host: "/",
+  host: "https://gerogenabil.site",
   secure: true,
-  port: "3001",
+  path: "/peerjs",
 });
 
 myPeer.on("open", (id) => {
