@@ -1,18 +1,25 @@
 const express = require("express");
 const app = express();
 const server = require("http").Server(app);
-const io = require("socket.io")(server);
+const io = require("socket.io").listen(server);
 const { v4: uuidV4 } = require("uuid");
-const { PeerServer } = require("peer");
+var ExpressPeerServer = require("peer").ExpressPeerServer;
 
+var options = {};
+app.use("/peerjs", ExpressPeerServer(server, { port: 3001, path: "/" }));
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 
 app.get("/", (req, res) => {
-  res.redirect(`/${uuidV4()}`);
+  res.render("index");
 });
 
-app.get("/:room", (req, res) => {
+app.get("/getroom", (req, res) => {
+  res.redirect(`/join/${uuidV4()}`);
+});
+
+app.get("/join/:room", (req, res) => {
+  console.log("that id is", req.params.room);
   res.render("room", { roomId: req.params.room });
 });
 
@@ -25,5 +32,4 @@ io.on("connection", (socket) => {
     });
   });
 });
-
 server.listen(3000);
