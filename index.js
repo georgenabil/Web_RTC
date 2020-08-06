@@ -3,10 +3,8 @@ const app = express();
 const server = require("http").Server(app);
 const io = require("socket.io").listen(server);
 const { v4: uuidV4 } = require("uuid");
-var ExpressPeerServer = require("peer").ExpressPeerServer;
 
 var options = {};
-app.use("/peerjs", ExpressPeerServer(server, { port: 3001, path: "/" }));
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 
@@ -19,7 +17,6 @@ app.get("/getroom", (req, res) => {
 });
 
 app.get("/join/:room", (req, res) => {
-  console.log("that id is", req.params.room);
   res.render("room", { roomId: req.params.room });
 });
 
@@ -32,4 +29,6 @@ io.on("connection", (socket) => {
     });
   });
 });
-server.listen(3000);
+server.listen(3000, () => {
+  console.log("serever is running on port  3000");
+});

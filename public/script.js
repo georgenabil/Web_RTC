@@ -1,11 +1,14 @@
 const socket = io("/");
 const videoGrid = document.getElementById("video-grid");
-const myPeer = new Peer();
 
-/*const myPeer = new Peer(undefined, {
-  host: "/",
-  port: "3001",
-});*/
+const videoButton = document.getElementById("videobtn");
+
+let videostatus = true;
+
+const myPeer = new Peer(undefined, {
+  host: "45.76.102.185",
+  port: "3020",
+});
 
 myPeer.on("open", (id) => {
   socket.emit("join-room", ROOM_ID, id);
@@ -62,4 +65,14 @@ function addVideoStream(video, stream) {
     video.play();
   });
   videoGrid.append(video);
+}
+
+videoButton.addEventListener("click", () => {
+  videoButton.innerText = OnVideo(myVideo) ? "video:OFF" : "Video:ON";
+});
+
+function OnVideo(streamvideo) {
+  videostatus = !videostatus;
+  streamvideo.srcObject.getTracks().forEach((t) => (t.enabled = videostatus));
+  return videostatus;
 }

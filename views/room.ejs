@@ -14,9 +14,14 @@
     ></script>
     <script src="/socket.io/socket.io.js" defer></script>
     <script src="/script.js" defer></script>
+    <link rel="stylesheet" href="./room.css" />
     <title>Document</title>
 
     <style>
+      body {
+        background-color: aliceblue;
+      }
+
       #video-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, 300px);
@@ -28,9 +33,57 @@
         height: 100%;
         object-fit: cover;
       }
+      .functional {
+        display: flex;
+        align-content: center;
+        justify-content: center;
+        margin: 20px auto;
+      }
+      .button {
+        display: inline-block;
+        border-radius: 4px;
+        background-color: #f4511e;
+        border: none;
+        color: #ffffff;
+        text-align: center;
+        font-size: 28px;
+        padding: 20px;
+        width: 200px;
+        transition: all 0.5s;
+        cursor: pointer;
+        margin: 5px;
+      }
+
+      .button span {
+        cursor: pointer;
+        display: inline-block;
+        position: relative;
+        transition: 0.5s;
+      }
+
+      .button span:after {
+        content: "\00bb";
+        position: absolute;
+        opacity: 0;
+        top: 0;
+        right: -20px;
+        transition: 0.5s;
+      }
+
+      .button:hover span {
+        padding-right: 25px;
+      }
+
+      .button:hover span:after {
+        opacity: 1;
+        right: 0;
+      }
     </style>
   </head>
   <body>
     <div id="video-grid"></div>
+    <div class="functional">
+      <button id="videobtn" class="button">Video:ON</button>
+    </div>
   </body>
 </html>
