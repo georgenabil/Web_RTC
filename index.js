@@ -3,6 +3,7 @@ const app = express();
 const server = require("http").Server(app);
 const io = require("socket.io").listen(server);
 const { v4: uuidV4 } = require("uuid");
+//require("dotenv").config();
 
 var options = {};
 app.set("view engine", "ejs");
@@ -29,6 +30,6 @@ io.on("connection", (socket) => {
     });
   });
 });
-server.listen(3000, () => {
-  console.log("serever is running on port  3000");
+server.listen(process.env.PORT || 3000, () => {
+  console.log("serever is running on port" + process.env.PORT || 3000);
 });
